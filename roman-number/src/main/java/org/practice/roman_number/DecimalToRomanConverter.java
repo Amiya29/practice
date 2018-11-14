@@ -17,8 +17,8 @@ public class DecimalToRomanConverter implements Converter<Integer, String> {
 			.sorted(Comparator.comparing(ROMAN_NUMERALS::getDecimalValue).reversed()) //desc sort by decimal value
 			.collect(toMap(ROMAN_NUMERALS::getDecimalValue, ROMAN_NUMERALS::name, (n1, n2) -> n1, LinkedHashMap::new)); //use linked hashmap to preserve order
 			
-	public String convert(Integer t) {
-		if (t > MAX_DECIMAL_LIMIT) {
+	public String convert(Integer decimal) {
+		if (decimal > MAX_DECIMAL_LIMIT) {
 			return ERROR_MSG_NUMBER_TOO_LONG;
 		}
 		
@@ -26,12 +26,12 @@ public class DecimalToRomanConverter implements Converter<Integer, String> {
 		
 		for (Entry<Integer, String> entry : DECIMAL_ROMAN_MAPPING.entrySet()) {
 			
-			while(t >= entry.getKey()) {
+			while(decimal >= entry.getKey()) {
 				sb.append(entry.getValue());
-				t -= entry.getKey();
+				decimal -= entry.getKey();
 			}
 			
-			if (t < 1) {
+			if (decimal < 1) {
 				break;
 			}
 		}
